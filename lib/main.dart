@@ -20,8 +20,10 @@ import 'package:socket_io_admin_client/features/role/presentation/providers/user
 import 'package:socket_io_admin_client/features/role/presentation/providers/user_role_provider.dart';
 import 'package:socket_io_admin_client/features/user/data/datasources/firestore_user_client_datasource.dart';
 import 'package:socket_io_admin_client/features/user/data/repository/user_client_repository_impl.dart';
+import 'package:socket_io_admin_client/features/user/domain/usecases/read_users_use_case.dart';
 import 'package:socket_io_admin_client/features/user/domain/usecases/update_client_fields_use_case.dart';
 import 'package:socket_io_admin_client/features/user/presentation/providers/user_client_provider.dart';
+import 'package:socket_io_admin_client/features/user/presentation/providers/uuid_generator_provider.dart';
 import 'package:socket_io_admin_client/firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -71,6 +73,9 @@ class MyApp extends StatelessWidget {
     final updateClientFieldsUseCase = UpdateClientFieldsUseCase(
       userClientRepository: userClientRepository,
     );
+    final readAllUserDataUseCase = ReadUsersUseCase(
+      userClientRepository: userClientRepository,
+    );
 
     return MultiProvider(
       providers: [
@@ -105,8 +110,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserClientProvider(
             updateClientFieldsUseCase: updateClientFieldsUseCase,
+            readUsersUseCase: readAllUserDataUseCase,
           ),
         ),
+
+        // UUID Generator Provider
+        ChangeNotifierProvider(create: (context) => UUIDGeneratorProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

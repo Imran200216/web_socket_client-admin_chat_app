@@ -7,6 +7,7 @@ import 'package:socket_io_admin_client/features/chat/presentation/screens/chat_s
 import 'package:socket_io_admin_client/features/home/presentation/screens/home_screen.dart';
 import 'package:socket_io_admin_client/features/role/presentation/screens/role_screen.dart';
 import 'package:socket_io_admin_client/features/splash/presentation/screens/splash_screen.dart';
+import 'package:socket_io_admin_client/features/user/presentation/screens/update_user_screen.dart';
 import 'package:socket_io_admin_client/features/user/presentation/screens/user_screen.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -66,6 +67,13 @@ final GoRouter appRouter = GoRouter(
       path: '/user',
       name: AppRouterConstants.user,
       builder: (context, state) => const UserScreen(),
+    ),
+
+    // add user
+    GoRoute(
+      path: '/updateUser',
+      name: AppRouterConstants.updateUser,
+      builder: (context, state) => const UpdateUserScreen(),
     ),
   ],
 );

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_admin_client/core/constants/app_db_constants.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:socket_io_admin_client/core/logger/app_logger.dart';
@@ -32,16 +33,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late WebSocketChannel channel;
 
-
-
   @override
   void initState() {
     super.initState();
 
     // IP Address
-    channel = IOWebSocketChannel.connect(
-      Uri.parse('ws://192.168.1.5:8000/ws'),
-    );
+    channel = IOWebSocketChannel.connect(Uri.parse('ws://192.168.1.5:8000/ws'));
 
     AppLogger.info('WebSocket connection initialized');
 
@@ -78,12 +75,22 @@ class _ChatScreenState extends State<ChatScreen> {
           return KAppDrawer(
             name: currentUser?.displayName ?? 'No Name',
             email: currentUser?.email ?? 'No Email',
-            role: "admin",
+            role: AppDBConstants.admin,
             profileImageUrl: currentUser?.photoURL ?? fallbackProfileImg,
+            onUpdatePress: () {
+              // User Screen
+              GoRouter.of(context).pushNamed(AppRouterConstants.user);
+            },
             onSignOut: () async {
+              // Sign Out
               await authEmailProvider.signOut();
+
+              // Clear Auth Local Data
               await AuthLocalService.clearAuthData();
+
               AppLogger.success("User signed out successfully");
+
+              // Auth Login
               GoRouter.of(
                 context,
               ).pushReplacementNamed(AppRouterConstants.authLogin);

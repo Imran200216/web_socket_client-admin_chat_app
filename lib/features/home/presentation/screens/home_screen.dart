@@ -7,6 +7,7 @@ import 'package:socket_io_admin_client/commons/widgets/KAppBar.dart';
 import 'package:socket_io_admin_client/commons/widgets/KAppDrawer.dart';
 import 'package:socket_io_admin_client/commons/widgets/KChatBubble.dart';
 import 'package:socket_io_admin_client/core/constants/app_colors_constants.dart';
+import 'package:socket_io_admin_client/core/constants/app_db_constants.dart';
 import 'package:socket_io_admin_client/core/constants/app_router_constants.dart';
 import 'package:socket_io_admin_client/core/logger/app_logger.dart';
 import 'package:socket_io_admin_client/core/service/auth_local_service.dart';
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return KAppDrawer(
             name: currentUser?.displayName ?? 'No Name',
             email: currentUser?.email ?? 'No Email',
-            role: "admin",
+            role: AppDBConstants.user,
             profileImageUrl: currentUser?.photoURL ?? fallbackProfileImg,
             onSignOut: () async {
               // Sign out

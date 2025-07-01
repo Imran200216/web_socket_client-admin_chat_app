@@ -22,4 +22,7 @@ class AppRouterConstants {
 
   // User
   static const String user = "user";
+
+  // Add User
+  static const String updateUser = "updateUser";
 }

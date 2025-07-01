@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:socket_io_admin_client/commons/widgets/KVerticalSpacer.dart';
 import 'package:socket_io_admin_client/core/constants/app_assets_constants.dart';
 import 'package:socket_io_admin_client/core/constants/app_colors_constants.dart';
+import 'package:socket_io_admin_client/core/constants/app_db_constants.dart';
 
 class KAppDrawer extends StatelessWidget {
   final String name;
@@ -11,14 +12,16 @@ class KAppDrawer extends StatelessWidget {
   final String role;
   final String? profileImageUrl;
   final VoidCallback onSignOut;
+  final VoidCallback? onUpdatePress;
 
   const KAppDrawer({
     super.key,
     required this.name,
     required this.email,
-    required this.role,
     this.profileImageUrl,
     required this.onSignOut,
+    this.onUpdatePress,
+    required this.role,
   });
 
   @override
@@ -44,9 +47,7 @@ class KAppDrawer extends StatelessWidget {
                     backgroundColor: Colors.grey.shade300,
                   ),
                 ),
-
                 KVerticalSpacer(height: 16),
-
                 Text(
                   name,
                   style: GoogleFonts.poppins(
@@ -55,7 +56,6 @@ class KAppDrawer extends StatelessWidget {
                     color: AppColorsConstants.blackColor,
                   ),
                 ),
-
                 Text(
                   email,
                   style: GoogleFonts.poppins(
@@ -70,10 +70,25 @@ class KAppDrawer extends StatelessWidget {
 
           KVerticalSpacer(height: 20),
 
-          // Sign Out Tile
+          if (role == AppDBConstants.admin)
+            ListTile(
+              onTap: onUpdatePress,
+              title: const Text("Update Emp"),
+              leading: Icon(
+                Icons.edit_outlined,
+                color: AppColorsConstants.blackColor,
+              ),
+              titleTextStyle: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: AppColorsConstants.blackColor,
+              ),
+            )
+          else
+            SizedBox(),
+
           ListTile(
             onTap: onSignOut,
-            title: Text("Sign Out"),
+            title: const Text("Sign Out"),
             leading: Icon(
               Icons.logout_outlined,
               color: AppColorsConstants.blackColor,

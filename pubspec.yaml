@@ -50,6 +50,12 @@ dependencies:
   # provider
   provider: ^6.1.5
 
+  # uuid
+  uuid: ^4.5.1
+
+  # skeletonizer
+  skeletonizer: ^2.0.1
+
 
 
 dev_dependencies:
