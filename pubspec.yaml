@@ -1,0 +1,68 @@
+name: socket_io_admin_client
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # web socket channel
+  web_socket_channel: ^3.0.3
+
+  # logger
+  logger: ^2.6.0
+
+  # shared preference
+  shared_preferences: ^2.5.3
+
+  # firebase core
+  firebase_core: ^3.14.0
+
+  # firebase auth
+  firebase_auth: ^5.6.0
+
+  # cloud firestore
+  cloud_firestore: ^5.6.9
+
+  # drop down btn
+  dropdown_button2: ^2.3.9
+
+  # router
+  go_router: ^15.2.4
+
+  # flutter svg
+  flutter_svg: ^2.2.0
+
+  # google fonts
+  google_fonts: ^6.2.1
+
+  # cached_network_image:
+  cached_network_image: ^3.4.1
+
+  # chat bubble
+  chat_bubbles: ^1.7.0
+
+  # provider
+  provider: ^6.1.5
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icon/svg/
+    - assets/images/svg/
+    - assets/images/jpg/
