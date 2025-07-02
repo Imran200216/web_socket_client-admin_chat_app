@@ -1,6 +1,6 @@
-import 'package:socket_io_admin_client/features/chat/data/datasources/Firestore_chat_datasource.dart';
-import 'package:socket_io_admin_client/features/chat/domain/entities/chat_entity.dart';
-import 'package:socket_io_admin_client/features/chat/domain/repository/chat_repository.dart';
+import 'package:socket_io_admin_client/features/chat_admin/data/datasources/Firestore_chat_datasource.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/entities/chat_entity.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/repository/chat_repository.dart';
 
 class ChatRepositoryImpl extends ChatRepository {
   final FirestoreChatDataSource firestoreChatDataSource;

@@ -3,7 +3,7 @@ import 'package:socket_io_admin_client/core/constants/app_router_constants.dart'
 import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_forget_password_screen.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_login_screen.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_sign_up_screen.dart';
-import 'package:socket_io_admin_client/features/chat/presentation/screens/chat_screen.dart';
+import 'package:socket_io_admin_client/features/chat_admin/presentation/screens/chat_screen.dart';
 import 'package:socket_io_admin_client/features/home/presentation/screens/home_screen.dart';
 import 'package:socket_io_admin_client/features/role/presentation/screens/role_screen.dart';
 import 'package:socket_io_admin_client/features/splash/presentation/screens/splash_screen.dart';
@@ -73,7 +73,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/updateUser',
       name: AppRouterConstants.updateUser,
-      builder: (context, state) => const UpdateUserScreen(),
+      builder: (context, state) {
+        final userUid = state.extra as String; // 👈 extract Firestore doc.id
+        return UpdateUserScreen(userUid: userUid);
+      },
     ),
   ],
 );

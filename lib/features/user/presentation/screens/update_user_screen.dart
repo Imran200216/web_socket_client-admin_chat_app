@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_admin_client/commons/widgets/KFilledBtn.dart';
+import 'package:socket_io_admin_client/commons/widgets/KSnackBar.dart';
 import 'package:socket_io_admin_client/commons/widgets/KTextFormField.dart';
 import 'package:socket_io_admin_client/commons/widgets/KUIDGeneratableTextFormField.dart';
-import 'package:socket_io_admin_client/commons/widgets/KVerticalSpacer.dart';
 import 'package:socket_io_admin_client/core/constants/app_colors_constants.dart';
-import 'package:socket_io_admin_client/core/logger/app_logger.dart';
+import 'package:socket_io_admin_client/core/constants/app_router_constants.dart';
 import 'package:socket_io_admin_client/features/user/presentation/providers/user_client_provider.dart';
 import 'package:socket_io_admin_client/features/user/presentation/providers/uuid_generator_provider.dart';
 
 class UpdateUserScreen extends StatefulWidget {
-  const UpdateUserScreen({super.key});
+  final String userUid;
+
+  const UpdateUserScreen({super.key, required this.userUid});
 
   @override
   State<UpdateUserScreen> createState() => _UpdateUserScreenState();
@@ -32,57 +35,82 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsConstants.whiteColor,
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      appBar: AppBar(title: const Text("Update User")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Company Role TextField
+              Text("User UID: ${widget.userUid}"),
+
+              const SizedBox(height: 20),
+
               KTextFormField(
                 controller: companyRoleController,
                 hintText: "Company Role",
                 prefixIcon: Icons.person,
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Enter role" : null,
               ),
 
-              const KVerticalSpacer(height: 20),
+              const SizedBox(height: 20),
 
-              // Employee Id TextField using UUID Provider
               Consumer<UUIDGeneratorProvider>(
                 builder: (context, uuidProvider, _) {
-                  // Sync the controller with the UUID provider
-                  empIdController.text = uuidProvider.uuid;
                   return KUIDGeneratableTextField(
                     controller: empIdController,
                     hintText: "Employee ID",
-                    prefixIcon: Icons.important_devices,
+                    prefixIcon: Icons.badge,
                     suffixIcon: Icons.refresh,
                     onSuffixIconTap: () {
                       uuidProvider.generateNewUUID();
+                      empIdController.text = uuidProvider.uuid;
                     },
+                    validator: (value) =>
+                        value == null || value.isEmpty ? "Generate ID" : null,
                   );
                 },
               ),
 
-              const KVerticalSpacer(height: 40),
+              const SizedBox(height: 40),
 
               Consumer<UserClientProvider>(
-                builder: (context, userClientProvider, child) {
+                builder: (context, userClientProvider, _) {
                   return KFilledBtn(
-                    label: "Add User",
-                    icon: Icons.add,
-                    onPressed: () {
-                      // You can handle form submission here
+                    color: AppColorsConstants.primaryColor,
+                    isLoading: userClientProvider.isLoading,
+                    label: "Update",
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        AppLogger.info("Form Valid");
-
                         final role = companyRoleController.text.trim();
                         final empId = empIdController.text.trim();
+
+                        try {
+                          await userClientProvider.updateUser(
+                            userUid: widget.userUid,
+                            companyRole: role,
+                            empId: empId,
+                          );
+
+                          KSnackBar.success(
+                            context: context,
+                            message: "User updated!",
+                          );
+
+                          // User Screen
+                          GoRouter.of(
+                            context,
+                          ).pushReplacementNamed(AppRouterConstants.user);
+                        } catch (e) {
+                          KSnackBar.error(
+                            context: context,
+                            message: "Update failed: $e",
+                          );
+                        }
                       }
                     },
+                    icon: Icons.add,
                   );
                 },
               ),

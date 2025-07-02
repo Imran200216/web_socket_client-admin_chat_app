@@ -8,11 +8,11 @@ import 'package:socket_io_admin_client/features/auth/domain/usecases/sign_in_use
 import 'package:socket_io_admin_client/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:socket_io_admin_client/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/providers/auth_email_provider.dart';
-import 'package:socket_io_admin_client/features/chat/data/datasources/Firestore_chat_datasource.dart';
-import 'package:socket_io_admin_client/features/chat/data/repository/chat_repository_impl.dart';
-import 'package:socket_io_admin_client/features/chat/domain/usecases/read_chat_usecase.dart';
-import 'package:socket_io_admin_client/features/chat/domain/usecases/send_chat_usecase.dart';
-import 'package:socket_io_admin_client/features/chat/presentation/providers/add_chat_provider.dart';
+import 'package:socket_io_admin_client/features/chat_admin/data/datasources/Firestore_chat_datasource.dart';
+import 'package:socket_io_admin_client/features/chat_admin/data/repository/chat_repository_impl.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/usecases/read_chat_usecase.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/usecases/send_chat_usecase.dart';
+import 'package:socket_io_admin_client/features/chat_admin/presentation/providers/add_chat_provider.dart';
 import 'package:socket_io_admin_client/features/role/data/datasources/firebase_user_role_datasources.dart';
 import 'package:socket_io_admin_client/features/role/data/repository/user_role_repository_impl.dart';
 import 'package:socket_io_admin_client/features/role/domain/usecases/user_role_usecases.dart';

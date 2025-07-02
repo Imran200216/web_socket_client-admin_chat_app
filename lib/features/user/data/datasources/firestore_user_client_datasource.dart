@@ -1,32 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:socket_io_admin_client/core/constants/app_db_constants.dart';
 import 'package:socket_io_admin_client/features/user/data/models/user_client_models.dart';
 
 class FirestoreUserClientDatasource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // ✅ Update user fields
   Future<UserClientModel> updateClientFields({
     required String userUid,
     required String companyRole,
     required String empId,
   }) async {
-    final docRef = _firestore.collection('userClients').doc(userUid);
 
-    await docRef.update({
-      'companyRole': companyRole,
-      'empId': empId,
+
+    final docRef = _firestore
+        .collection(AppDBConstants.userCollection)
+        .doc(userUid);
+
+    final docSnap = await docRef.get();
+    if (!docSnap.exists) {
+      throw Exception("User document not found");
+    }
+
+    await docRef.update({'companyRole': companyRole, 'empId': empId});
+
+    final updatedDoc = await docRef.get();
+    return UserClientModel.fromJson({
+      ...updatedDoc.data()!,
+      'userUid': userUid,
     });
-
-    final updatedSnap = await docRef.get();
-    return UserClientModel.fromJson(updatedSnap.data()!);
   }
 
-  // ✅ Read all users from Firestore
   Future<List<UserClientModel>> readAllUsers() async {
-    final snapshot = await _firestore.collection('userClients').get();
-
+    final snapshot = await _firestore.collection('users').get();
     return snapshot.docs.map((doc) {
-      return UserClientModel.fromJson(doc.data());
+      return UserClientModel.fromJson({...doc.data(), 'userUid': doc.id});
     }).toList();
   }
 }

@@ -10,8 +10,8 @@ class UpdateClientFieldsUseCase {
     String companyRole,
     String empId,
     String userUid,
-  ) async {
-    return await userClientRepository.updateClientFields(
+  )  {
+    return  userClientRepository.updateClientFields(
       companyRole,
       empId,
       userUid,

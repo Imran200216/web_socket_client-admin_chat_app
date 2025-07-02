@@ -12,7 +12,7 @@ import 'package:socket_io_admin_client/core/constants/app_router_constants.dart'
 import 'package:socket_io_admin_client/core/logger/app_logger.dart';
 import 'package:socket_io_admin_client/core/service/auth_local_service.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/providers/auth_email_provider.dart';
-import 'package:socket_io_admin_client/features/chat/presentation/providers/add_chat_provider.dart';
+import 'package:socket_io_admin_client/features/chat_admin/presentation/providers/add_chat_provider.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

@@ -9,6 +9,7 @@ class KTextFormField extends StatefulWidget {
   final bool isPassword;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final bool isReadOnly; // You already declared this
   final void Function(String)? onFieldSubmitted;
 
   const KTextFormField({
@@ -19,6 +20,7 @@ class KTextFormField extends StatefulWidget {
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.isReadOnly = false, // default to false
     this.onFieldSubmitted,
   });
 
@@ -40,16 +42,18 @@ class _KTextFormFieldState extends State<KTextFormField> {
         ),
       ),
       child: TextFormField(
-        style: GoogleFonts.poppins(
-          fontWeight: FontWeight.w500,
-          color: AppColorsConstants.blackColor,
-        ),
         controller: widget.controller,
         keyboardType: widget.keyboardType,
         obscureText: widget.isPassword ? _obscure : false,
         validator: widget.validator,
         onFieldSubmitted: widget.onFieldSubmitted,
+        readOnly: widget.isReadOnly,
+        // ✅ Respect the readOnly property
         cursorColor: AppColorsConstants.primaryColor,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w500,
+          color: AppColorsConstants.blackColor,
+        ),
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: GoogleFonts.poppins(

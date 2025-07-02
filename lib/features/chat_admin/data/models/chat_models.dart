@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:socket_io_admin_client/features/chat/domain/entities/chat_entity.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/entities/chat_entity.dart';
 
 class ChatModel extends ChatEntity {
   ChatModel({

@@ -1,4 +1,4 @@
-import 'package:socket_io_admin_client/features/chat/domain/entities/chat_entity.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/entities/chat_entity.dart';
 
 abstract class ChatRepository {
   // Send Chat To User

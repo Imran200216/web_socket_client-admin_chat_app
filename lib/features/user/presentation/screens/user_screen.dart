@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:socket_io_admin_client/commons/widgets/KUserListTile.dart';
 import 'package:socket_io_admin_client/commons/widgets/KVerticalSpacer.dart';
+import 'package:socket_io_admin_client/core/constants/app_colors_constants.dart';
 import 'package:socket_io_admin_client/core/constants/app_db_constants.dart';
+import 'package:socket_io_admin_client/core/constants/app_router_constants.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -10,7 +15,24 @@ class UserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Users")),
+
+      appBar: AppBar(
+        backgroundColor: AppColorsConstants.primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            // Pop
+            GoRouter.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        centerTitle: true,
+        title: Text("Users"),
+        titleTextStyle: GoogleFonts.poppins(
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          color: AppColorsConstants.blackColor,
+        ),
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(AppDBConstants.userCollection)
@@ -30,10 +52,17 @@ class UserScreen extends StatelessWidget {
             children = users.map((doc) {
               final userData = doc.data() as Map<String, dynamic>;
 
-              return ListTile(
-                leading: const Icon(Icons.person),
-                title: Text(userData['userName'] ?? 'No Name'),
-                subtitle: Text("Email: ${userData['userEmail'] ?? ''}"),
+              return KUserListTile(
+                userName: userData['userName'] ?? '',
+                userEmail: userData['email'] ?? '',
+                companyRole: userData['companyRole'] ?? '',
+                empId: userData['empId'] ?? '',
+                userUid: doc.id,
+                onTap: () {
+                  GoRouter.of(
+                    context,
+                  ).pushNamed(AppRouterConstants.updateUser, extra: doc.id);
+                },
               );
             }).toList();
           }

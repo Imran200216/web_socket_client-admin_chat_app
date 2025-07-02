@@ -10,13 +10,12 @@ import 'package:socket_io_admin_client/core/logger/app_logger.dart';
 import 'package:socket_io_admin_client/commons/widgets/KAppBar.dart';
 import 'package:socket_io_admin_client/commons/widgets/KAppDrawer.dart';
 import 'package:socket_io_admin_client/commons/widgets/KChatBubble.dart';
-import 'package:socket_io_admin_client/commons/widgets/KHorizontalSpacer.dart';
 import 'package:socket_io_admin_client/commons/widgets/KTextFormField.dart';
 import 'package:socket_io_admin_client/core/constants/app_colors_constants.dart';
 import 'package:socket_io_admin_client/core/constants/app_router_constants.dart';
 import 'package:socket_io_admin_client/core/service/auth_local_service.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/providers/auth_email_provider.dart';
-import 'package:socket_io_admin_client/features/chat/presentation/providers/add_chat_provider.dart';
+import 'package:socket_io_admin_client/features/chat_admin/presentation/providers/add_chat_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -103,6 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
         builder: (context, chatProvider, child) {
           return Column(
             children: [
+              // Chats
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(12),
@@ -117,6 +117,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                 ),
               ),
+
+              // Chat Messaging Footer
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -124,7 +126,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 color: Colors.grey.shade100,
                 child: Row(
+                  spacing: 10,
                   children: [
+                    // Chat Text Form Field
                     Expanded(
                       child: KTextFormField(
                         controller: messageController,
@@ -132,7 +136,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         prefixIcon: Icons.message,
                       ),
                     ),
-                    KHorizontalSpacer(width: 10),
+
+                    // Send Button
                     IconButton(
                       icon: const Icon(Icons.send),
                       color: AppColorsConstants.blackColor,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:socket_io_admin_client/features/chat/domain/entities/chat_entity.dart';
-import 'package:socket_io_admin_client/features/chat/domain/usecases/read_chat_usecase.dart';
-import 'package:socket_io_admin_client/features/chat/domain/usecases/send_chat_usecase.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/entities/chat_entity.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/usecases/read_chat_usecase.dart';
+import 'package:socket_io_admin_client/features/chat_admin/domain/usecases/send_chat_usecase.dart';
 
 class ChatProvider extends ChangeNotifier {
   final SendChatUseCase sendChatUseCase;

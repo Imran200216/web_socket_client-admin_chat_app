@@ -9,15 +9,16 @@ class UserClientRepositoryImpl extends UserClientRepository {
 
   @override
   Future<UserClientEntity> updateClientFields(
+    String userUid,
     String companyRole,
     String empId,
-    String userUid,
-  ) {
-    return firestoreUserClientDatasource.updateClientFields(
+  ) async {
+    final model = await firestoreUserClientDatasource.updateClientFields(
       userUid: userUid,
       companyRole: companyRole,
       empId: empId,
     );
+    return model;
   }
 
   @override

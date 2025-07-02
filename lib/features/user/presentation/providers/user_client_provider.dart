@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:socket_io_admin_client/core/logger/app_logger.dart';
 import 'package:socket_io_admin_client/features/user/domain/entities/user_client_entity.dart';
 import 'package:socket_io_admin_client/features/user/domain/usecases/read_users_use_case.dart';
@@ -13,27 +13,24 @@ class UserClientProvider extends ChangeNotifier {
     required this.readUsersUseCase,
   });
 
+  List<UserClientEntity> _users = [];
   UserClientEntity? updatedUser;
 
-  List<UserClientEntity> _users = [];
+  bool _isLoading = false;
+  bool _isUpdating = false;
 
   List<UserClientEntity> get users => _users;
 
-  bool _isLoading = false;
-
   bool get isLoading => _isLoading;
-
-  bool _isUpdating = false;
 
   bool get isUpdating => _isUpdating;
 
-  // 🔄 Update user fields with loading state
-  Future<void> updateFields({
+  Future<void> updateUser({
     required String userUid,
     required String companyRole,
     required String empId,
   }) async {
-    _isUpdating = true;
+    _isLoading = true;
     notifyListeners();
 
     try {
@@ -42,28 +39,28 @@ class UserClientProvider extends ChangeNotifier {
         companyRole,
         empId,
       );
-      AppLogger.success("User updated successfully");
+      AppLogger.success("✅ User updated");
     } catch (e) {
-      AppLogger.error("Error updating user: $e");
+      AppLogger.error("⛔ Failed to update user: $e");
+      rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isUpdating = false;
-    notifyListeners();
   }
 
-  // 📥 Fetch all users
   Future<void> fetchAllUsers() async {
     _isLoading = true;
     notifyListeners();
 
     try {
       _users = await readUsersUseCase();
-      AppLogger.info("Fetched ${_users.length} users");
+      AppLogger.info("✅ Fetched ${_users.length} users");
     } catch (e) {
-      AppLogger.error("Error fetching users: $e");
+      AppLogger.error("⛔ Error fetching users: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 }
