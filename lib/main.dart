@@ -20,6 +20,7 @@ import 'package:socket_io_admin_client/features/role/presentation/providers/user
 import 'package:socket_io_admin_client/features/role/presentation/providers/user_role_provider.dart';
 import 'package:socket_io_admin_client/features/user/data/datasources/firestore_user_client_datasource.dart';
 import 'package:socket_io_admin_client/features/user/data/repository/user_client_repository_impl.dart';
+import 'package:socket_io_admin_client/features/user/domain/usecases/get_user_by_uid_use_case.dart';
 import 'package:socket_io_admin_client/features/user/domain/usecases/read_users_use_case.dart';
 import 'package:socket_io_admin_client/features/user/domain/usecases/update_client_fields_use_case.dart';
 import 'package:socket_io_admin_client/features/user/presentation/providers/user_client_provider.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
     final readAllUserDataUseCase = ReadUsersUseCase(
       userClientRepository: userClientRepository,
     );
+    final getUserByUidUseCase = GetUserByUidUseCase(userClientRepository);
 
     return MultiProvider(
       providers: [
@@ -109,6 +111,7 @@ class MyApp extends StatelessWidget {
         // User Client Provider
         ChangeNotifierProvider(
           create: (context) => UserClientProvider(
+            getUserByUidUseCase: getUserByUidUseCase,
             updateClientFieldsUseCase: updateClientFieldsUseCase,
             readUsersUseCase: readAllUserDataUseCase,
           ),

@@ -8,11 +8,9 @@ class UserClientRepositoryImpl extends UserClientRepository {
   UserClientRepositoryImpl({required this.firestoreUserClientDatasource});
 
   @override
-  Future<UserClientEntity> updateClientFields(
-    String userUid,
-    String companyRole,
-    String empId,
-  ) async {
+  Future<UserClientEntity> updateClientFields(String userUid,
+      String companyRole,
+      String empId,) async {
     final model = await firestoreUserClientDatasource.updateClientFields(
       userUid: userUid,
       companyRole: companyRole,
@@ -24,5 +22,10 @@ class UserClientRepositoryImpl extends UserClientRepository {
   @override
   Future<List<UserClientEntity>> readAllUser() {
     return firestoreUserClientDatasource.readAllUsers();
+  }
+
+  @override
+  Future<UserClientEntity> getUserByUid(String uid) {
+    return firestoreUserClientDatasource.getUserByUid(uid);
   }
 }

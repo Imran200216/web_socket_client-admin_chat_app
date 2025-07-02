@@ -92,7 +92,20 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      appBar: KAppBar(title: 'SOC Client'),
+      appBar: KAppBar(
+        title: 'SOC Client',
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Client Personal Info
+              GoRouter.of(
+                context,
+              ).pushNamed(AppRouterConstants.clientPersonalInfo);
+            },
+            icon: Icon(Icons.info),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           // body

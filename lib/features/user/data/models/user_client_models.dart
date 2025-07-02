@@ -9,10 +9,10 @@ class UserClientModel extends UserClientEntity {
     required super.empId,
   });
 
-  factory UserClientModel.fromJson(Map<String, dynamic> json) {
+  factory UserClientModel.fromJson(Map<String, dynamic> json, [String? uid]) {
     return UserClientModel(
       userEmail: json['userEmail'] ?? '',
-      userUid: json['userUid'],
+      userUid: json['userUid'] ?? '',
       userName: json['userName'] ?? '',
       companyRole: json['companyRole'] ?? '',
       empId: json['empId'] ?? '',

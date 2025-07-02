@@ -36,4 +36,11 @@ class FirestoreUserClientDatasource {
       return UserClientModel.fromJson({...doc.data(), 'userUid': doc.id});
     }).toList();
   }
+
+
+  Future<UserClientModel> getUserByUid(String uid) async {
+    final doc = await _firestore.collection('users').doc(uid).get();
+    if (!doc.exists) throw Exception("User not found");
+    return UserClientModel.fromJson(doc.data()!, uid);
+  }
 }

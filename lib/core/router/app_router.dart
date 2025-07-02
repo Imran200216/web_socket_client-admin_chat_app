@@ -4,6 +4,7 @@ import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_f
 import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_login_screen.dart';
 import 'package:socket_io_admin_client/features/auth/presentation/screens/auth_sign_up_screen.dart';
 import 'package:socket_io_admin_client/features/chat_admin/presentation/screens/chat_screen.dart';
+import 'package:socket_io_admin_client/features/client_personal_info/presentation/screens/client_personal_info.dart';
 import 'package:socket_io_admin_client/features/home/presentation/screens/home_screen.dart';
 import 'package:socket_io_admin_client/features/role/presentation/screens/role_screen.dart';
 import 'package:socket_io_admin_client/features/splash/presentation/screens/splash_screen.dart';
@@ -77,6 +78,13 @@ final GoRouter appRouter = GoRouter(
         final userUid = state.extra as String; // 👈 extract Firestore doc.id
         return UpdateUserScreen(userUid: userUid);
       },
+    ),
+
+    // Client Personal Info
+    GoRoute(
+      path: '/clientPersonalInfo',
+      name: AppRouterConstants.clientPersonalInfo,
+      builder: (context, state) => const ClientPersonalInfo(),
     ),
   ],
 );

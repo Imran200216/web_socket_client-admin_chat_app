@@ -10,4 +10,7 @@ abstract class UserClientRepository {
 
   // Real All User Data
   Future<List<UserClientEntity>> readAllUser();
+
+  //  Get User By Uid
+  Future<UserClientEntity> getUserByUid(String uid);
 }
